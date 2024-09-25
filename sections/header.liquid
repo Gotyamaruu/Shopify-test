@@ -1,4 +1,5 @@
 {%- assign main_manu_linklist = linklists[section.settings.menu].links -%}
+
 <div class="relative bg-white" x-data="{ mobileMenuOpen: false}">
   <div class="mx-auto px-4 sm:px-6">
     <div class="flex justify-between items-center py-6 md:justify-start md:space-x-10">
@@ -63,8 +64,10 @@
           {%- render 'icon-shopping-bag' -%}
         </a>
 
-        <a href="{{ routes.account_login_url }}" class="text-base text-gray-500 hover:text-gray-900"> Login </a>
-        <a href="{{ routes.account_register_url }}" class="text-base text-gray-500 hover:text-gray-900"> Register </a>
+        {%- if shop.customer_accounts_enabled -%}
+          <a href="{{ routes.account_login_url }}" class="text-base text-gray-500 hover:text-gray-900"> Login </a>
+          <a href="{{ routes.account_register_url }}" class="text-base text-gray-500 hover:text-gray-900"> Register </a>
+        {%- endif -%}
       </div>
     </div>
   </div>
@@ -84,7 +87,6 @@
         </div>
         <div class="pt-3">
           <nav class="grid gap-y-7">
-            {% comment %} {%- for link in linklists['main-menu'].links -%} {% endcomment %}
             {%- for link in main_manu_linklist -%}
               {%- assign link_handle = link.handle | replace: '-', '_' -%}
               {%- if link.links != blank -%}
@@ -138,7 +140,7 @@
     {
       "type": "link_list",
       "id": "menu",
-      "label": "eader Manu",
+      "label": "header Manu",
       "default": "main-menu"
     }
   ]
